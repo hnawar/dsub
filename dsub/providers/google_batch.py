@@ -675,7 +675,7 @@ class GoogleBatchJobProvider(google_utils.GoogleJobProviderBase):
     ipt = google_batch_operations.build_instance_policy_or_template(
         instance_policy
     )
-    network_interface = google_batch_operations.build_network_interface(
+    network_policy = google_batch_operations.build_network_policy(
       network= job_resources.network or "default", 
       subnetwork=job_resources.subnetwork or "default",
       no_external_ip_address=job_resources.use_private_address or False, 
