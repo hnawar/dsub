@@ -18,7 +18,7 @@ _DEPENDENCIES = [
     # direct dependencies
     'google-api-python-client>=2.47.0,<=2.85.0',
     'google-auth>=2.6.6,<=2.17.3',
-    'google-cloud-batch==0.10.0',
+    'google-cloud-batch>=0.17.3',
     'python-dateutil<=2.8.2',
     'pytz<=2023.3',
     'pyyaml<=6.0',

@@ -215,9 +215,15 @@ def build_volume(disk: str, path: str) -> batch_v1.types.Volume:
 
 def build_allocation_policy(
     ipts: List[batch_v1.types.AllocationPolicy.InstancePolicyOrTemplate],
+    network_interface: batch_v1.types.AllocationPolicy.NetworkInterface,
+    service_account: batch_v1.types.ServiceAccount, 
 ) -> batch_v1.types.AllocationPolicy:
   allocation_policy = batch_v1.AllocationPolicy()
   allocation_policy.instances = ipts
+  network_policy = batch_v1.AllocationPolicy.NetworkPolicy()
+  network_policy.network_interfaces	 = [network_interface]
+  allocation_policy.network = network_policy
+  allocation_policy.service_account = service_account
   return allocation_policy
 
 
@@ -228,6 +234,24 @@ def build_instance_policy_or_template(
   ipt.policy = instance_policy
   return ipt
 
+def build_network_interface(
+    network: str,
+    subnetwork: str,
+    no_external_ip_address: bool,	
+) -> batch_v1.types.AllocationPolicy.NetworkInterface:
+  
+  network_interface = batch_v1.types.AllocationPolicy.NetworkInterface()
+  network_interface.network = network
+  network_interface.subnetwork = subnetwork
+  network_interface.no_external_ip_address = no_external_ip_address
+  return network_interface
+
+def build_service_account(
+    service_account_email: str,
+) -> batch_v1.types.ServiceAccount:
+  service_account = batch_v1.types.ServiceAccount()
+  service_account.email = service_account_email
+  return service_account
 
 def build_logs_policy(
     destination: batch_v1.types.LogsPolicy.Destination, logs_path: str

@@ -675,7 +675,19 @@ class GoogleBatchJobProvider(google_utils.GoogleJobProviderBase):
     ipt = google_batch_operations.build_instance_policy_or_template(
         instance_policy
     )
-    allocation_policy = google_batch_operations.build_allocation_policy([ipt])
+    network_interface = google_batch_operations.build_network_interface(
+      network= job_resources.network or "default", 
+      subnetwork=job_resources.subnetwork or "default",
+      no_external_ip_address=job_resources.use_private_address or False, 
+      )
+    service_account = google_batch_operations.build_service_account(
+      service_account_email=job_resources.service_account
+    )
+    allocation_policy = google_batch_operations.build_allocation_policy(
+      ipts = [ipt],
+      network_interfcae = network_interface, 
+      service_account=service_account
+      )
     logs_policy = google_batch_operations.build_logs_policy(
         batch_v1.LogsPolicy.Destination.PATH, _BATCH_LOG_FILE_PATH
     )
